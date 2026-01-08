@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  :root {
+    /* Catppuccin Latte (Light Mode) */
+    --background: 220 23% 95%;
+    --foreground: 234 16% 35%;
+
+    --card: 220 22% 92%;
+    --card-foreground: 234 16% 35%;
+
+    --popover: 220 23% 95%;
+    --popover-foreground: 234 16% 35%;
+
+    --primary: 220 91% 54%;
+    --primary-foreground: 220 23% 95%;
+
+    --secondary: 223 16% 83%;
+    --secondary-foreground: 234 16% 35%;
+
+    --muted: 223 16% 88%;
+    --muted-foreground: 233 10% 47%;
+
+    --accent: 266 85% 58%;
+    --accent-foreground: 220 23% 95%;
+
+    --destructive: 347 87% 44%;
+    --destructive-foreground: 220 23% 95%;
+
+    --border: 223 16% 83%;
+    --input: 223 16% 83%;
+    --ring: 220 91% 54%;
+
+    --radius: 0.75rem;
+
+    /* Custom tokens */
+    --teal: 183 74% 35%;
+    --green: 109 58% 40%;
+    --peach: 22 99% 52%;
+    --lavender: 231 97% 72%;
+    --pink: 316 73% 69%;
+    --sky: 189 71% 73%;
+    --yellow: 40 62% 73%;
+    --mauve: 266 85% 58%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
+  }
+
+  .dark {
+    /* Catppuccin Mocha (Dark Mode) */
+    --background: 240 21% 15%;
+    --foreground: 226 64% 88%;
+
+    --card: 240 21% 12%;
+    --card-foreground: 226 64% 88%;
+
+    --popover: 240 21% 15%;
+    --popover-foreground: 226 64% 88%;
+
+    --primary: 217 92% 76%;
+    --primary-foreground: 240 21% 12%;
+
+    --secondary: 232 12% 39%;
+    --secondary-foreground: 226 64% 88%;
+
+    --muted: 233 12% 26%;
+    --muted-foreground: 227 35% 80%;
+
+    --accent: 267 84% 81%;
+    --accent-foreground: 240 21% 12%;
+
+    --destructive: 343 81% 75%;
+    --destructive-foreground: 240 21% 12%;
+
+    --border: 232 12% 26%;
+    --input: 232 12% 26%;
+    --ring: 217 92% 76%;
+
+    /* Custom tokens */
+    --teal: 170 57% 73%;
+    --green: 115 54% 76%;
+    --peach: 23 92% 75%;
+    --lavender: 232 97% 85%;
+    --pink: 316 72% 86%;
+    --sky: 189 71% 73%;
+    --yellow: 41 86% 83%;
+    --mauve: 267 84% 81%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--card)));
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}
+
+@layer utilities {
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .font-sans {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slide-in-left 0.5s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 0.5s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.4s ease-out forwards;
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-1;
+    box-shadow: 0 10px 40px -10px hsl(var(--primary) / 0.3);
+  }
+
+  .glass {
+    @apply backdrop-blur-md bg-card/80 border border-border/50;
+  }
+
+  .section-padding {
+    @apply py-20 md:py-28 lg:py-32;
+  }
+
+  .container-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes letter-swap {
+
+  0%,
+  40% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  50% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  60%,
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.cursor-blink::after {
+  content: '|';
+  animation: blink 1s infinite;
+  @apply text-primary ml-1;
+}
+
+/* Stagger animations */
+.stagger-1 {
+  animation-delay: 0.1s;
+}
+
+.stagger-2 {
+  animation-delay: 0.2s;
+}
+
+.stagger-3 {
+  animation-delay: 0.3s;
+}
+
+.stagger-4 {
+  animation-delay: 0.4s;
+}
+
+.stagger-5 {
+  animation-delay: 0.5s;
+}
+
+.stagger-6 {
+  animation-delay: 0.6s;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-secondary rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground;
+}
