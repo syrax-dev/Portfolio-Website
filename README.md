@@ -3,4 +3,4 @@
 Personal developer portfolio showcasing my projects, skills, and experience.
 
 ## Live Demo
-https://syrax-dev.github.io/Portfolio-Website/
+https://syraxdev.vercel.app/
