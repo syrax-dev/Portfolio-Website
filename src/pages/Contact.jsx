@@ -6,33 +6,65 @@ import { InlineLink } from "../components/Cta";
 import { profile } from "../data/profile";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MAX_NAME_LENGTH = 100;
+const MAX_EMAIL_LENGTH = 254;
+const MAX_MESSAGE_LENGTH = 5000;
 
 function validate(values) {
   const errors = {};
-  if (!values.name.trim()) errors.name = "Name is required.";
+  const name = values.name.trim();
+  const email = values.email.trim();
+  const message = values.message.trim();
+
+  if (!name) {
+    errors.name = "Name is required.";
+  } else if (name.length > MAX_NAME_LENGTH) {
+    errors.name = `Name must be ${MAX_NAME_LENGTH} characters or fewer.`;
+  }
   if (!values.email.trim()) {
     errors.email = "Email is required.";
-  } else if (!EMAIL_RE.test(values.email.trim())) {
+  } else if (email.length > MAX_EMAIL_LENGTH || !EMAIL_RE.test(email)) {
     errors.email = "Enter a valid email address.";
   }
-  if (!values.message.trim()) errors.message = "Message is required.";
+  if (!message) {
+    errors.message = "Message is required.";
+  } else if (message.length > MAX_MESSAGE_LENGTH) {
+    errors.message = `Message must be ${MAX_MESSAGE_LENGTH} characters or fewer.`;
+  }
   return errors;
 }
 
-// Submit handler is isolated so a real email service (Resend, Formspree,
-// EmailJS, etc.) can be wired in here later without touching the UI.
-async function submitContactForm(_values) {
-  await new Promise((resolve) => setTimeout(resolve, 900));
-  // TODO: replace with a real request, e.g.
-  // const res = await fetch("/api/contact", { method: "POST", body: JSON.stringify(values) });
-  // if (!res.ok) throw new Error("Request failed");
-  return { ok: true };
+async function submitContactForm(values) {
+  const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+  if (!accessKey) {
+    throw new Error("Contact form isn't configured yet. Please try again later.");
+  }
+
+  const response = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify({
+      access_key: accessKey,
+      name: values.name.trim(),
+      email: values.email.trim(),
+      message: values.message.trim(),
+      subject: `Portfolio contact from ${values.name.trim()}`,
+      from_name: "SYRAX Portfolio",
+      botcheck: "",
+    }),
+  });
+
+  const result = await response.json();
+  if (!response.ok || !result.success) {
+    throw new Error(result.message || "Message could not be sent. Please try again.");
+  }
 }
 
 export default function Contact() {
   const [values, setValues] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
+  const [submitError, setSubmitError] = useState("");
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -47,12 +79,14 @@ export default function Contact() {
     if (Object.keys(nextErrors).length > 0) return;
 
     setStatus("loading");
+    setSubmitError("");
     try {
       await submitContactForm(values);
       setStatus("success");
       setValues({ name: "", email: "", message: "" });
-    } catch {
+    } catch (error) {
       setStatus("error");
+      setSubmitError(error.message || "Something went wrong. Please try again.");
     }
   }
 
@@ -101,6 +135,7 @@ export default function Contact() {
               <Field
                 label="Name"
                 name="name"
+                maxLength={MAX_NAME_LENGTH}
                 value={values.name}
                 onChange={handleChange}
                 error={errors.name}
@@ -110,6 +145,7 @@ export default function Contact() {
                 label="Email"
                 name="email"
                 type="email"
+                maxLength={MAX_EMAIL_LENGTH}
                 value={values.email}
                 onChange={handleChange}
                 error={errors.email}
@@ -120,6 +156,7 @@ export default function Contact() {
                 name="message"
                 as="textarea"
                 rows={4}
+                maxLength={MAX_MESSAGE_LENGTH}
                 value={values.message}
                 onChange={handleChange}
                 error={errors.message}
@@ -149,15 +186,15 @@ export default function Contact() {
                 </motion.button>
 
                 {status === "success" && (
-                  <span className="inline-flex items-center gap-1.5 text-sm text-accent">
+                  <span role="status" className="inline-flex items-center gap-1.5 text-sm text-accent">
                     <CheckCircle2 size={16} />
                     Message sent
                   </span>
                 )}
                 {status === "error" && (
-                  <span className="inline-flex items-center gap-1.5 text-sm text-red-400">
+                  <span role="alert" className="inline-flex items-center gap-1.5 text-sm text-red-400">
                     <AlertCircle size={16} />
-                    Something went wrong — try again
+                    {submitError}
                   </span>
                 )}
               </div>
