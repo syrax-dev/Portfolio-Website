@@ -5,10 +5,32 @@ import Reveal from "../components/Reveal";
 import { InlineLink } from "../components/Cta";
 import { profile } from "../data/profile";
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_LOCAL_RE = /^[A-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Z0-9!#$%&'*+/=?^_`{|}~-]+)*$/i;
+const EMAIL_DOMAIN_LABEL_RE = /^[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?$/i;
+const NAME_RE = /^[\p{L}\p{M}][\p{L}\p{M}\s'’-]*$/u;
 const MAX_NAME_LENGTH = 100;
 const MAX_EMAIL_LENGTH = 254;
+const MIN_MESSAGE_LENGTH = 10;
 const MAX_MESSAGE_LENGTH = 5000;
+
+function isValidEmail(email) {
+  if (email.length > MAX_EMAIL_LENGTH) return false;
+
+  const at = email.lastIndexOf("@");
+  if (at <= 0 || at !== email.indexOf("@")) return false;
+
+  const local = email.slice(0, at);
+  const domain = email.slice(at + 1);
+  if (local.length > 64 || !EMAIL_LOCAL_RE.test(local)) return false;
+
+  const labels = domain.split(".");
+  if (labels.length < 2 || labels.some((label) => !EMAIL_DOMAIN_LABEL_RE.test(label))) {
+    return false;
+  }
+
+  const topLevelDomain = labels[labels.length - 1];
+  return /^[A-Z]{2,63}$/i.test(topLevelDomain);
+}
 
 function validate(values) {
   const errors = {};
@@ -18,16 +40,20 @@ function validate(values) {
 
   if (!name) {
     errors.name = "Name is required.";
+  } else if (!NAME_RE.test(name)) {
+    errors.name = "Name can contain letters, spaces, apostrophes, and hyphens only.";
   } else if (name.length > MAX_NAME_LENGTH) {
     errors.name = `Name must be ${MAX_NAME_LENGTH} characters or fewer.`;
   }
   if (!values.email.trim()) {
     errors.email = "Email is required.";
-  } else if (email.length > MAX_EMAIL_LENGTH || !EMAIL_RE.test(email)) {
+  } else if (!isValidEmail(email)) {
     errors.email = "Enter a valid email address.";
   }
   if (!message) {
     errors.message = "Message is required.";
+  } else if (message.length < MIN_MESSAGE_LENGTH) {
+    errors.message = `Message must be at least ${MIN_MESSAGE_LENGTH} characters.`;
   } else if (message.length > MAX_MESSAGE_LENGTH) {
     errors.message = `Message must be ${MAX_MESSAGE_LENGTH} characters or fewer.`;
   }
