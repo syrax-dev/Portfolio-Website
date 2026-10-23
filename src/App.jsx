@@ -23,9 +23,9 @@ const META = {
   "/work": {
     title: "Work & Projects — Nayan Patel (SYRAX)",
     description:
-      "Selected engineering projects by Nayan Patel (SYRAX), including Airomotion, BACKLY, Arch Linux Hyprland dotfiles, and full-stack web applications.",
+      "Selected projects by Nayan Patel (SYRAX), including Airomotion, Interio Store, and Arch Linux Hyprland dotfiles.",
     keywords:
-      "Nayan Patel Projects, Syrax Work, Airomotion, BACKLY, Full Stack Projects, React Apps, Node.js APIs, Arch Hyprland Dotfiles",
+      "Nayan Patel Projects, Syrax Work, Airomotion, Interio Store, WordPress, E-commerce Website, Arch Hyprland Dotfiles",
   },
   "/resume": {
     title: "Resume & Experience — Nayan Patel (SYRAX)",

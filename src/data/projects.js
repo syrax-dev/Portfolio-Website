@@ -12,17 +12,12 @@ export const featuredProject = {
 export const otherProjects = [
   {
     number: "02",
-    name: "BACKLY",
-    type: "Full Stack Project",
-    stack: ["React", "Node.js", "REST APIs", "Authentication"],
+    name: "Interio Store",
+    type: "Freelance Project",
+    stack: ["WordPress", "PHP", "HTML", "CSS", "JavaScript", "SEO"],
     description:
-      "A full-stack web application covering both frontend and backend, built for hands-on practice with API design, database workflows, and authentication.",
-    credentials: {
-      id: "backly@test.com",
-      pass: "Backly@123",
-    },
-    github: "https://github.com/nayanpateldev/BACKLY",
-    site: "https://backly.onrender.com/",
+      "Premium interior e-commerce website developed with a custom WordPress theme tailored to the brand's requirements, SEO optimization to improve search visibility, and a responsive experience across devices.",
+    site: "https://interiostore.in",
   },
   {
     number: "03",

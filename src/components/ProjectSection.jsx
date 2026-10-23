@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
-export default function ProjectSection({ project, featured = false }) {
+export default function ProjectSection({ project }) {
   const { number, name, type, stack, description, github, site, credentials } = project;
 
   return (
@@ -19,9 +19,7 @@ export default function ProjectSection({ project, featured = false }) {
           <div>
             <div className="flex flex-wrap items-baseline gap-x-3 sm:gap-x-4 gap-y-1">
               <h3
-                className={`tracking-tight text-ink transition-colors duration-200 group-hover:text-accent font-semibold ${
-                  featured ? "text-2xl sm:text-3xl md:text-5xl" : "text-xl sm:text-2xl md:text-4xl"
-                }`}
+                className="text-xl sm:text-2xl md:text-4xl tracking-tight text-ink transition-colors duration-200 group-hover:text-accent font-semibold"
               >
                 {name}
               </h3>
@@ -73,7 +71,7 @@ export default function ProjectSection({ project, featured = false }) {
                   rel="noreferrer"
                   className="inline-flex items-center gap-1.5 py-1 text-sm text-ink hover:text-accent transition-colors duration-200 group/link"
                 >
-                  Website
+                  Site Link
                   <ArrowUpRight
                     size={14}
                     className="transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"

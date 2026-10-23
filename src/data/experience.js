@@ -2,13 +2,13 @@
 export const experience = [
   {
     role: "Full Stack Developer",
-    org: "DataBriks — Startup",
+    org: "DataBrics — Startup",
     dates: "MAY 2026 – PRESENT",
     points: [
       "Developed and maintained full-stack web applications, contributing to both frontend and backend development.",
       "Built responsive frontend interfaces and integrated them with backend REST APIs and database workflows.",
       "Developed backend services using Node.js and Express.js, including API design, authentication, data handling, and logging.",
-      "Built an admin dashboard with RBAC for managing users, roles, and application resources.",
+      "Developed role-based dashboard interfaces that display the appropriate UI for each user role.",
       "Implemented role-based access restrictions across dashboard features and backend API endpoints.",
       "Worked with database systems, API integrations, webhooks, and Docker-based development and deployment workflows.",
     ],
@@ -30,7 +30,7 @@ export const experience = [
     dates: "2025 – PRESENT",
     points: [
       "Airomotion — full-stack web application with a React frontend and Node.js/Express backend, integrating Google Apps Script and Google Sheets, with PDF scanning, rate limiting, CORS, logging, and CSV-injection prevention.",
-      "BACKLY — full-stack web application covering frontend and backend development, with APIs, database workflows, and authentication.",
+      "Interio Store — premium interior e-commerce website built with a custom WordPress theme, SEO optimization, and a responsive experience across devices.",
       "Arch Linux / Hyprland — custom Linux development environment with keyboard-driven workflows, custom keybindings, workspace rules, automation scripts, and modular dotfiles following XDG standards.",
     ],
   },
